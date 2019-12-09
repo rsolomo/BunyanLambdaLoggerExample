@@ -7,7 +7,9 @@ namespace BunyanLambdaLoggerExample
   {
     public static void Main()
     {
-      var provider = new ServiceCollection().BuildServiceProvider();
+      var provider = new ServiceCollection()
+        .AddLogging(logging => logging.SetMinimumLevel(LogLevel.Trace))
+        .BuildServiceProvider();
       var factory = provider.GetRequiredService<ILoggerFactory>();
       var logger = factory.AddBunyanLambdaLogger().CreateLogger("test");
       logger.LogInformation("Should log information with {0}", "argument");
